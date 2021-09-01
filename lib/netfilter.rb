@@ -15,7 +15,7 @@ require "netfilter/ip_tables"
 require "netfilter/ip6_tables"
 require "netfilter/version"
 
-class Netfilter
+class NetfilterManager
   NATIVE_TABLES = %w(filter nat mangle raw)
   NATIVE_CHAINS = %w(input output forward prerouting postrouting)
   NATIVE_TARGETS = %w(accept drop continue return reject dnat snat arpreply ct mark)

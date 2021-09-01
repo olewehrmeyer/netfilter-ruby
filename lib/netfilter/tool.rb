@@ -1,4 +1,4 @@
-class Netfilter
+class NetfilterManager
   class Tool
     attr_accessor :tables, :namespace
 

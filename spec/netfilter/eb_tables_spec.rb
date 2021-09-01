@@ -1,10 +1,10 @@
 #encoding: utf-8
 require 'spec_helper'
-describe Netfilter::EbTables do
+describe NetfilterManager::EbTables do
   describe "Class Methods" do
     describe "parse" do
       it "should not crash when there are no rules" do
-        Netfilter::EbTables.stub(:execute).and_return <<EOT
+        NetfilterManager::EbTables.stub(:execute).and_return <<EOT
 Bridge table: filter
 
 Bridge chain: INPUT, entries: 0, policy: ACCEPT
@@ -14,7 +14,7 @@ Bridge chain: FORWARD, entries: 0, policy: ACCEPT
 Bridge chain: OUTPUT, entries: 0, policy: ACCEPT
 EOT
 
-        Netfilter::EbTables.parse.should eq(
+        NetfilterManager::EbTables.parse.should eq(
           "filter" => {
             "INPUT" => [
             ],
@@ -27,7 +27,7 @@ EOT
       end
 
       it "should properly parse the current system's iptables" do
-        Netfilter::EbTables.stub(:execute).and_return <<EOT
+        NetfilterManager::EbTables.stub(:execute).and_return <<EOT
 Bridge table: filter
 
 Bridge chain: INPUT, entries: 3, policy: ACCEPT
@@ -115,7 +115,7 @@ Bridge chain: guest592991-1-i, entries: 6, policy: ACCEPT
 -j DROP
 EOT
 
-        Netfilter::EbTables.parse.should eq(
+        NetfilterManager::EbTables.parse.should eq(
           "filter" => {
             "INPUT" => [
               "-i tap15866 -j guest15865-1-o",

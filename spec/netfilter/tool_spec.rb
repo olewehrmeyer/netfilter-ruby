@@ -1,9 +1,9 @@
 #encoding: utf-8
 require 'spec_helper'
-describe Netfilter::Tool do
+describe NetfilterManager::Tool do
   describe "Instance Methods" do
     before do
-      @tool = Netfilter::Tool.new do |eb|
+      @tool = NetfilterManager::Tool.new do |eb|
         eb.table :filter do |t|
           t.chain :input do |c|
             c.filter :protocol => :tcp, :dport => 22, :jump => :text
@@ -57,11 +57,11 @@ describe Netfilter::Tool do
         @tool.stub(:execute) do |command|
           if trigger && executed.count == 3
             trigger = false
-            raise Netfilter::SystemError, "fake"
+            raise NetfilterManager::SystemError, "fake"
           end
           executed << command
         end
-        lambda{ @tool.up }.should raise_error(Netfilter::SystemError, "fake")
+        lambda{ @tool.up }.should raise_error(NetfilterManager::SystemError, "fake")
         executed.should eq [
           "tool --table filter --new-chain text",
           "tool --table filter --append INPUT --protocol udp --dport 53 --jump text",
@@ -100,19 +100,19 @@ describe Netfilter::Tool do
 
     describe "export" do
       it "should return a hash suitable for import" do
-        import = Netfilter::Tool.import(@tool.export)
+        import = NetfilterManager::Tool.import(@tool.export)
         @tool.commands.should eq(import.commands)
       end
 
       it "should return a hash suitable for json serialization and later import" do
-        import = Netfilter::Tool.import(JSON.parse(@tool.export.to_json))
+        import = NetfilterManager::Tool.import(JSON.parse(@tool.export.to_json))
         @tool.commands.should eq(import.commands)
       end
     end
 
     describe "table" do
       it "should not create a new table if one with the same name already exists" do
-        tool = Netfilter::Tool.new
+        tool = NetfilterManager::Tool.new
         tool.table("filter")
         tool.table(:filter)
         tool.table("nat")

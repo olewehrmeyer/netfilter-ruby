@@ -1,4 +1,4 @@
-class Netfilter
+class NetfilterManager
   class Filter
     attr_accessor :chain
     attr_accessor :type

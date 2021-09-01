@@ -1,9 +1,9 @@
 #encoding: utf-8
 require 'spec_helper'
-describe Netfilter do
+describe NetfilterManager do
   describe "Instance Methods" do
     before do
-      @netfilter = Netfilter.new
+      @netfilter = NetfilterManager.new
     end
 
     describe "up" do
@@ -68,13 +68,13 @@ describe Netfilter do
 
       it "should return a hash suitable for import" do
         export = @netfilter.export
-        import = Netfilter.import(export)
+        import = NetfilterManager.import(export)
         import.export.should == export
       end
 
       it "should return a hash suitable for json serialization and later import" do
         export = @netfilter.export.to_json
-        import = Netfilter.import(JSON.parse(export))
+        import = NetfilterManager.import(JSON.parse(export))
         import.export.to_json.should == export
       end
     end

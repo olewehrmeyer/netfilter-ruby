@@ -22,7 +22,7 @@ Or install it yourself as:
 
     require "netfilter"
 
-    firewall = Netfilter.new("example") do |eb, ip4, ip6|
+    firewall = NetfilterManager.new("example") do |eb, ip4, ip6|
       ip4.table :filter do |t|
         t.chain "INPUT" do |c|
           # dont lock yourself

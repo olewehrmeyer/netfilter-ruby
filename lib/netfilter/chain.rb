@@ -1,4 +1,4 @@
-class Netfilter
+class NetfilterManager
   class Chain
     attr_accessor :table
     attr_accessor :name, :filters

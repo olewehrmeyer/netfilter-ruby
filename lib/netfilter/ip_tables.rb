@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Netfilter
+class NetfilterManager
   class IpTables < Tool
     def self.parse
       {}.tap do |data|
